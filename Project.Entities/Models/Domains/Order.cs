@@ -12,6 +12,6 @@ namespace Project.Entities.Models.Domains
         public decimal TotalPrice { get; set; }
 
         //Rs Prop
-        public virtual ICollection<OrderDetails> OrderDetails { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

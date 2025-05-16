@@ -16,6 +16,6 @@ namespace Project.Entities.Models.Domains
 
         //RS Props
         public virtual Category Category { get; set; }
-        public virtual ICollection<OrderDetails> OrderDetails { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

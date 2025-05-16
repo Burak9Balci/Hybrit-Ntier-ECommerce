@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Project.Configurations.Options
 {
-    public class OrderDetailConfiguration : BaseConfiguration<OrderDetails>
+    public class OrderDetailConfiguration : BaseConfiguration<OrderDetail>
     {
-        public override void Configure(EntityTypeBuilder<OrderDetails> builder)
+        public override void Configure(EntityTypeBuilder<OrderDetail> builder)
         {
             base.Configure(builder);
             builder.Ignore(x => x.ID);

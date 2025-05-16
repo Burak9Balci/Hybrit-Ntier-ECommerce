@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Project.Entities.Models.Domains
 {
-    public class OrderDetails : BaseEntity
+    public class OrderDetail : BaseEntity
     {
         public int OrderID { get; set; }
         public int ProductID { get; set; }

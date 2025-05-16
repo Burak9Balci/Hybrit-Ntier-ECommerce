@@ -7,7 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Context\" />
+    <ProjectReference Include="..\Project.Configurations\Project.Configurations.csproj" />
+    <ProjectReference Include="..\Project.Entities\Project.Entities.csproj" />
   </ItemGroup>
 
 </Project>
