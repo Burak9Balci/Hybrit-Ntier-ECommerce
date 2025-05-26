@@ -9,15 +9,15 @@ namespace Project.WebAPI.Models.ShoppingTools
         {
             Quantity++;
         }
-        [JsonProperty]
+        [JsonProperty("ID")]
         public int ID { get; set; }
-        [JsonProperty]
+        [JsonProperty("ProductName")]
         public string ProductName { get; set; }
-        [JsonProperty]
+        [JsonProperty("Quantity")]
         public short Quantity { get; set; }
-        [JsonProperty]
+        [JsonProperty("UnitPrice")]
         public decimal UnitPrice { get; set; }
-        [JsonProperty]
+        [JsonProperty("SubTotal")]
         public decimal SubTotal {
             get
             {
@@ -27,15 +27,12 @@ namespace Project.WebAPI.Models.ShoppingTools
         }
 
         [JsonProperty("ImagePath")]
-
         public string ImagePath { get; set; }
 
         [JsonProperty("CategoryName")]
-
         public string CategoryName { get; set; }
 
         [JsonProperty("CategoryId")]
-
         public int? CategoryId { get; set; }
     }
 }

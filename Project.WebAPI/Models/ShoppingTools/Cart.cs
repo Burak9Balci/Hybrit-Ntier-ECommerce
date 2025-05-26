@@ -5,13 +5,14 @@ namespace Project.WebAPI.Models.ShoppingTools
     [Serializable]
     public class Cart
     {
+        [JsonProperty("_myCart")]
         readonly Dictionary<int, CartItem> _myCart;
         public Cart()
         {
             _myCart = new Dictionary<int,CartItem>();
         }
-        [JsonProperty]
-        public List<CartItem> CartItems { 
+        [JsonProperty("GetCartItems")]
+        public List<CartItem> GetCartItems { 
             get
             {
               return  _myCart.Values.ToList();
@@ -31,7 +32,6 @@ namespace Project.WebAPI.Models.ShoppingTools
             _myCart[id].Quantity--;
             if (_myCart[id].Quantity == 0)
             {
-
                 _myCart.Remove(id);
             }
         }
@@ -43,7 +43,7 @@ namespace Project.WebAPI.Models.ShoppingTools
         {
             _myCart.Remove(id);
         }
-        [JsonProperty]
+        [JsonProperty("TotalPrice")]
         public decimal TotalPrice { get; set; }
     }
 }
