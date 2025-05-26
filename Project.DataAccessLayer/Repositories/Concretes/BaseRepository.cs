@@ -22,6 +22,7 @@ namespace Project.DataAccessLayer.Repositories.Concretes
         public async Task AddAsync(T item)
         {
             await _db.Set<T>().AddAsync(item);
+            _db.SaveChanges();
         }
 
         public async Task<bool> AnyAsync(Expression<Func<T, bool>> exp)
@@ -29,59 +30,21 @@ namespace Project.DataAccessLayer.Repositories.Concretes
             return await _db.Set<T>().AnyAsync(exp);
         }
 
-        public async Task Delete(T item)
-        {
-            item.DeletedDate = DateTime.Now;
-            item.Status = DataStatus.Deleted;
-            await _db.SaveChangesAsync();
-        }
-
+ 
         public async Task<T> FindAsync(int id)
         {
             return await _db.Set<T>().FindAsync(id);
         }
 
-        public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> exp)
+        public async Task<List<T>> GetAllAsync()
         {
-           return await _db.Set<T>().FirstOrDefaultAsync(exp);
+            return await _db.Set<T>().ToListAsync();
         }
 
-        public List<T> GetActives()
+        public async Task UpdateAsync(T originalEntity, T newEntity)
         {
-            return _db.Set<T>().Where(x =>x.Status == DataStatus.Inserted).ToList();
-        }
-
-        public List<T> GetAll()
-        {
-           return _db.Set<T>().ToList();
-        }
-
-        public List<T> GetModifieds()
-        {
-            return _db.Set<T>().Where(x => x.Status == DataStatus.Updated).ToList();
-        }
-
-        public List<T> GetPassives()
-        {
-            return _db.Set<T>().Where(x => x.Status == DataStatus.Deleted).ToList(); 
-        }
-
-        public object Select(Expression<Func<T, object>> exp)
-        {
-            return _db.Set<T>().Select(exp);
-        }
-
-        public IQueryable<X> Select<X>(Expression<Func<T, X>> exp)
-        {
-            return _db.Set<T>().Select(exp);
-        }
-
-        public async Task Update(T item)
-        {
-            item.ModifiedDate = DateTime.Now;
-            item.Status = DataStatus.Updated;
-            T theItem = await FindAsync(item.ID);
-            _db.Entry(theItem).CurrentValues.SetValues(item);
+           
+            _db.Entry(originalEntity).CurrentValues.SetValues(newEntity);
             await _db.SaveChangesAsync();
         }
 

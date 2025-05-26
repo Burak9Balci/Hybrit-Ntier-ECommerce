@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Project.DataAccessLayer.Repositories.Abstracts
 {
-    public interface ICategoryRepostory:IRepository<Category>
+    public interface ICategoryRepository:IRepository<Category>
     {
     }
 }

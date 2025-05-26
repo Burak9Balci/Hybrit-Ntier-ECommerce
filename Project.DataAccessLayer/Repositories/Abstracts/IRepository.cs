@@ -11,20 +11,12 @@ namespace Project.DataAccessLayer.Repositories.Abstracts
     public interface IRepository<T> where T: IEntity
     {
         //List Comands
-        List<T> GetAll();
-        List<T> GetActives();
-        List<T> GetPassives();
-        List<T> GetModifieds();
-
+        Task<List<T>> GetAllAsync();
         Task AddAsync(T item);
-        Task Update(T item);
-        Task Delete(T item);
+        Task UpdateAsync(T originalEntity, T newEntity);
 
         List<T> Where(Expression<Func<T, bool>> exp);
         Task<bool> AnyAsync(Expression<Func<T, bool>> exp);
-        Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> exp);
-        object Select(Expression<Func<T, object>> exp);
-        IQueryable<X> Select<X>(Expression<Func<T, X>> exp);
         Task<T> FindAsync(int id);
     }
 }

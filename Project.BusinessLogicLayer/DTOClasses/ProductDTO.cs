@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Project.Entities.Models.Domains
+namespace Project.BusinessLogicLayer.DTOClasses
 {
-    public class Product : BaseEntity
+    public class ProductDTO : BaseDTO
     {
         public string ProductName { get; set; }
         public decimal UnitPrice { get; set; }
@@ -14,9 +14,5 @@ namespace Project.Entities.Models.Domains
         public short Stock { get; set; }
         public int CategoryID { get; set; }
         public string? ImagePath { get; set; }
-
-        //RS Props
-        public virtual Category Category { get; set; }
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

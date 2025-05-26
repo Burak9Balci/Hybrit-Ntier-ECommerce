@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Project.DataAccessLayer.Repositories.Concretes
 {
-    public class CategoryRepository : BaseRepository<Category>, ICategoryRepostory
+    public class CategoryRepository : BaseRepository<Category>, ICategoryRepository
     {
         public CategoryRepository(MyContext db) : base(db)
         {

@@ -4,16 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Project.Entities.Models.Domains
+namespace Project.BusinessLogicLayer.DTOClasses
 {
-    public class Order : BaseEntity
+    public class OrderDTO : BaseDTO
     {
         public string ShippingAddress { get; set; }
         public decimal TotalPrice { get; set; }
         public int AppUserID { get; set; }
-
-        //Rs Prop
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
-        public virtual AppUser AppUser { get; set; }
     }
 }

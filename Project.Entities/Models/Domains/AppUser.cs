@@ -11,6 +11,11 @@ namespace Project.Entities.Models.Domains
 {
     public class AppUser : IdentityUser<int>, IEntity
     {
+
+        //Guid bilgisayarınızın mac adresi ip adresi ve sistem tarihini alıp bunları bir takım algoritmalarla hashleyip size bir kod olusturan bir tiptir...
+        public Guid ActivationCode { get; set; } //Her kullanıcım icin sadece ona özgü unique bir kod olusturmak isterim ki onun Email'ine o kodu gönderebileyim. Böylece ben onun Email'ine gidip oradaki linke tıkladıgını o kodu bana geri ulastırdıgında anlarım...
+
+
         public AppUser()
         {
             CreatedDate = DateTime.Now; 
@@ -22,8 +27,10 @@ namespace Project.Entities.Models.Domains
         public DateTime? DeletedDate { get; set; }
         public DataStatus Status { get; set; }
         public int AppRoleID { get; set; }
+        public string Password { get; set; }
 
         //RS props
-        public AppRole AppRole { get; set; }
+        public virtual AppRole AppRole { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }
