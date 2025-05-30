@@ -16,7 +16,7 @@ namespace Project.DataAccessLayer.Repositories.Abstracts
         Task UpdateAsync(T originalEntity, T newEntity);
         List<T> Where(Expression<Func<T, bool>> exp);
         Task<bool> AnyAsync(Expression<Func<T, bool>> exp);
-        Task<T> FindAsync(int id);
+        Task<T> FindAsync(int? id);
         Task SaveChangesAsync();
     }
 }

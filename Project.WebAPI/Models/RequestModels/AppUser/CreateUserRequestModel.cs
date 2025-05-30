@@ -1,6 +1,6 @@
-﻿namespace Project.WebAPI.Models.RequestModels
+﻿namespace Project.WebAPI.Models.RequestModels.AppUser
 {
-    public class UserRequestModel
+    public class CreateUserRequestModel
     {
         public string UserName { get; set; }
         public string Password { get; set; }

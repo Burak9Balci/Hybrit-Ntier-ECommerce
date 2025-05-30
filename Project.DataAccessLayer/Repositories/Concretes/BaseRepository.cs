@@ -31,7 +31,7 @@ namespace Project.DataAccessLayer.Repositories.Concretes
         }
 
  
-        public async Task<T> FindAsync(int id)
+        public async Task<T> FindAsync(int? id)
         {
             return await _db.Set<T>().FindAsync(id);
         }

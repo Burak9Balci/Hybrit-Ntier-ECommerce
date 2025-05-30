@@ -10,7 +10,7 @@ namespace Project.Entities.Models.Domains
     {
         public string ShippingAddress { get; set; }
         public decimal TotalPrice { get; set; }
-        public int AppUserID { get; set; }
+        public int? AppUserID { get; set; }
 
         //Rs Prop
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }

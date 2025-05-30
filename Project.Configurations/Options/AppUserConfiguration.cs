@@ -13,8 +13,8 @@ namespace Project.Configurations.Options
         public override void Configure(EntityTypeBuilder<AppUser> builder)
         {
             base.Configure(builder);
-            builder.Ignore(x => x.ID);
-            builder.HasOne(x => x.AppRole).WithOne(x => x.AppUser).HasForeignKey<AppRole>(x => x.ID);
+         
+            builder.HasOne(x => x.AppRole).WithOne(x => x.AppUser).HasForeignKey<AppRole>(x => x.AppUserID);
         }
     }
 }

@@ -6,7 +6,7 @@ using Project.BusinessLogicLayer.DTOClasses;
 using Project.BusinessLogicLayer.Managers.Abstracts;
 using Project.BusinessLogicLayer.Managers.Concretes;
 using Project.Entities.Models.Domains;
-using Project.WebAPI.Models.RequestModels;
+using Project.WebAPI.Models.RequestModels.AppUser;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace Project.WebAPI.Controllers.MainControllers
@@ -33,7 +33,7 @@ namespace Project.WebAPI.Controllers.MainControllers
 
         }
         [HttpPost]
-        public async Task<IActionResult> Register(UserRequestModel requestModel)
+        public async Task<IActionResult> Register(CreateUserRequestModel requestModel)
         {
 
             if (await _appUserManager.AnyAsync(x =>x.Email == requestModel.Email))
@@ -52,7 +52,7 @@ namespace Project.WebAPI.Controllers.MainControllers
             return BadRequest("Girdiğin Email daha onceden alınmış");
         }
         [HttpPost]
-        public async Task<IActionResult> SignIn(UserRequestModel requestModel)
+        public async Task<IActionResult> SignIn(CreateUserRequestModel requestModel)
         {
             AppUserDTO appUserDTO = _mapper.Map<AppUserDTO>(requestModel);
             SignInResult result = await _appUserManager.PasswordSignInAsync(appUserDTO);

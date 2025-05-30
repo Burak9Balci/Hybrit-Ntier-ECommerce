@@ -15,7 +15,7 @@ namespace Project.Entities.Models.Domains
             CreatedDate = DateTime.Now;
             Status= DataStatus.Inserted;
         }
-        public int ID { get; set; }
+        public int Id { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public DateTime? DeletedDate { get; set; }

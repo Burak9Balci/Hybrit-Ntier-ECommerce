@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Project.BusinessLogicLayer.DTOClasses;
-using Project.WebAPI.Models.RequestModels;
+using Project.WebAPI.Models.RequestModels.AppUser;
 using Project.WebAPI.Models.RequestModels.Category;
 using Project.WebAPI.Models.RequestModels.Order;
 using Project.WebAPI.Models.RequestModels.Product;
@@ -14,14 +14,12 @@ namespace Project.WebAPI.Models.MappingService
     {
         public ResponseAndRequstMapping()
         {
-            CreateMap<UserRequestModel, AppUserDTO>();
+            CreateMap<CreateUserRequestModel, AppUserDTO>();
 
-            CreateMap<List<CategoryDTO>, List<CategoryResponseModel>>();
-            CreateMap<List<ProductDTO>, List<ProductResponseModel>>();
-            CreateMap<List<OrderDTO>, List<OrderResponseModel>>();
+           
 
             CreateMap<CategoryDTO, CategoryResponseModel>();
-            CreateMap<ProductDTO, ProductResponseModel>();
+            CreateMap<ProductDTO, ProductResponseModel>().ReverseMap();
             CreateMap<OrderDTO, OrderResponseModel>();
 
             CreateMap<CreateCategoryRequestModel, CategoryDTO>();

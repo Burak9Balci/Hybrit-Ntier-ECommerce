@@ -21,7 +21,7 @@ namespace Project.WebAPI.Controllers.DomainControllers
 
         }
         [HttpGet]
-        public IActionResult GetCategories(CategoryResponseModel responseModel)
+        public IActionResult GetCategories()
         {
             List<CategoryResponseModel> categories = _mapper.Map<List<CategoryResponseModel>>(_categoryManager.GetActives()); 
             return Ok(categories);
@@ -37,20 +37,20 @@ namespace Project.WebAPI.Controllers.DomainControllers
         {
             CategoryDTO category = _mapper.Map<CategoryDTO>(createCategory);
             await _categoryManager.AddAsync(category);
-            return Ok();
+            return Ok("Ekleme Gerçekleşti");
         }
         [HttpPut]
         public async Task<IActionResult> UpdateCategory(UpdateCategoryRequestModel updateCategory)
         {
             CategoryDTO category = _mapper.Map<CategoryDTO>(updateCategory);
             await _categoryManager.UpdateAsync(category);
-            return Ok();
+            return Ok("Update Gerçekleşti");
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategory(int id)
         {
             await _categoryManager.DeleteAsync(id);
-            return Ok();
+            return Ok("Silme gerçekleşti");
         }
     }
 }

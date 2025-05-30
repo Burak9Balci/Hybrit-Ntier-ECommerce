@@ -16,12 +16,12 @@ namespace Project.Entities.Models.Domains
             CreatedDate = DateTime.Now;
             Status = DataStatus.Inserted;
         }
-        public int ID { get; set; }
+       
         public DateTime CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
         public DataStatus Status { get; set; }
-        public int AppUserID { get; set; }
+        public int? AppUserID { get; set; }
 
         //RS
         public virtual AppUser AppUser { get; set; }

@@ -41,14 +41,14 @@ namespace Project.BusinessLogicLayer.Managers.Concretes
             await _userManager.AddToRoleAsync(_mapper.Map<AppUser>(appUser), "Member");
         }
 
-       
-
+    
         public async Task<IdentityResult> CreateAppUserAsync(AppUserDTO appUserDTO)
         {
             AppUser user = _mapper.Map<AppUser>(appUserDTO);
             Guid specId = Guid.NewGuid();
             user.ActivationCode = specId;
             return await _userManager.CreateAsync(user,appUserDTO.Password);
+         
 
         }
 

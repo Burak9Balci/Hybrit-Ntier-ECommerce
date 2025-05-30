@@ -77,7 +77,7 @@ namespace Project.BusinessLogicLayer.Managers.Concretes
             item.ModifiedDate = DateTime.Now;
             item.Status = DataStatus.Updated;
             U entity = _mapper.Map<U>(item);
-            U old = await _repository.FindAsync(entity.ID);
+            U old = await _repository.FindAsync(entity.Id);
             await _repository.UpdateAsync(old, entity);
            
         }
