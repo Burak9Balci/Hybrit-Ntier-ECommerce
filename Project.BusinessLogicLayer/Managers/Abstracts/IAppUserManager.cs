@@ -11,11 +11,12 @@ namespace Project.BusinessLogicLayer.Managers.Abstracts
 {
     public interface IAppUserManager : IManager<AppUserDTO,AppUser>
     {
-        public Task<IdentityResult> CreateAppUserAsync(AppUserDTO appUserDTO);
-        public Task AddToRoleAsync(AppUserDTO appUserDTO);
-        public Task<SignInResult> PasswordSignInAsync(AppUserDTO appUserDTO);
-        public Task<AppUser> FindUserByEmailAsync(AppUserDTO appUserDTO);
-        public Task<IList<string>> GetRolesAsync(AppUserDTO appUserDTO);
-        public Task SendConfirmEMail(string email);
+        Task<IdentityResult> CreateAppUserAsync(AppUserDTO appUserDTO);
+        Task AddToRoleAsync(AppUserDTO appUserDTO);
+        Task<SignInResult> PasswordSignInAsync(AppUserDTO appUserDTO);
+        Task<AppUser> FindUserByEmailAsync(AppUserDTO appUserDTO);
+        Task<IList<string>> GetRolesAsync(AppUserDTO appUserDTO);
+        Task SendConfirmEMailAsync(string email);
+        Task<ConfirmEmailResultDTO> ConfirmEmailAsync(Guid specId, int id);
     }
 }

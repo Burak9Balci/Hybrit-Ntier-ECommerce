@@ -19,11 +19,12 @@ namespace Project.WebAPI.Models.ShoppingTools
         public decimal UnitPrice { get; set; }
         [JsonProperty("SubTotal")]
         public decimal SubTotal {
+
             get
             {
                 return Quantity * UnitPrice;
             }
-           
+   
         }
 
         [JsonProperty("ImagePath")]

@@ -16,26 +16,40 @@ namespace Project.WebAPI.Controllers.MainControllers
     public class AuthenticationController : ControllerBase
     {
 
-        IAppUserManager _appUserManager;
-        IMapper _mapper;
+        readonly IAppUserManager _appUserManager;
+        readonly IMapper _mapper;
         public AuthenticationController(IAppUserManager appUserManager,IMapper mapper)
         {
             _appUserManager = appUserManager;
             _mapper = mapper;
         }
+        [HttpGet]
+        public async Task<IActionResult> ConfirmEmail(Guid specId,int id) 
+        {
+
+            ConfirmEmailResultDTO confirm = await _appUserManager.ConfirmEmailAsync(specId,id);
+            if(confirm.Succeeded) return Ok($"{confirm.Message}");
+            else return BadRequest($"{confirm.Message}");
+
+        }
         [HttpPost]
         public async Task<IActionResult> Register(UserRequestModel requestModel)
         {
-            AppUserDTO appUserDTO = _mapper.Map<AppUserDTO>(requestModel);
-            IdentityResult result = await _appUserManager.CreateAppUserAsync(appUserDTO);
 
-            if (result.Succeeded)
-            { 
-                await _appUserManager.AddToRoleAsync(appUserDTO);
-                await _appUserManager.SendConfirmEMail(appUserDTO.Email);
-                Ok("Kayıt oldun Evladımm");
+            if (await _appUserManager.AnyAsync(x =>x.Email == requestModel.Email))
+            {
+                AppUserDTO appUserDTO = _mapper.Map<AppUserDTO>(requestModel);
+                IdentityResult result = await _appUserManager.CreateAppUserAsync(appUserDTO);
+
+                if (result.Succeeded)
+                {
+                    await _appUserManager.AddToRoleAsync(appUserDTO);
+                    await _appUserManager.SendConfirmEMailAsync(appUserDTO.Email);
+                    Ok("Kayıt oldun Evladımm");
+                }
+                return BadRequest("Giriş Yaparken Hata");
             }
-            return BadRequest("Giriş Yaparken Hata");
+            return BadRequest("Girdiğin Email daha onceden alınmış");
         }
         [HttpPost]
         public async Task<IActionResult> SignIn(UserRequestModel requestModel)

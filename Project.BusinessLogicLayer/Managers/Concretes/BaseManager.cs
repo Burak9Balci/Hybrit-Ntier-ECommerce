@@ -29,9 +29,18 @@ namespace Project.BusinessLogicLayer.Managers.Concretes
             await _repository.AddAsync(domain);
         }
 
-        public Task DeleteAsync(T item)
+        public async Task<bool> AnyAsync(Expression<Func<U, bool>> exp)
         {
-            throw new NotImplementedException();
+          return await _repository.AnyAsync(exp);
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+          
+            U item = await _repository.FindAsync(id);
+            item.DeletedDate = DateTime.Now;
+            item.Status = DataStatus.Deleted;
+            await _repository.SaveChangesAsync();
         }
 
         public async Task<U> FindAsync(int id)
@@ -41,7 +50,7 @@ namespace Project.BusinessLogicLayer.Managers.Concretes
 
         public List<T> GetActives()
         {
-            List<U> values = _repository.Where(x => x.Status != DataStatus.Deleted);
+            List<U> values =  _repository.Where(x => x.Status != DataStatus.Deleted);
             return _mapper.Map<List<T>>(values);
         }
 
@@ -70,6 +79,7 @@ namespace Project.BusinessLogicLayer.Managers.Concretes
             U entity = _mapper.Map<U>(item);
             U old = await _repository.FindAsync(entity.ID);
             await _repository.UpdateAsync(old, entity);
+           
         }
 
     }

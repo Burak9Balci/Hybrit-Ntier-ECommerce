@@ -16,6 +16,10 @@ namespace Project.WebAPI.Models.MappingService
         {
             CreateMap<UserRequestModel, AppUserDTO>();
 
+            CreateMap<List<CategoryDTO>, List<CategoryResponseModel>>();
+            CreateMap<List<ProductDTO>, List<ProductResponseModel>>();
+            CreateMap<List<OrderDTO>, List<OrderResponseModel>>();
+
             CreateMap<CategoryDTO, CategoryResponseModel>();
             CreateMap<ProductDTO, ProductResponseModel>();
             CreateMap<OrderDTO, OrderResponseModel>();

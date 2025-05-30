@@ -5,6 +5,7 @@ using Project.BusinessLogicLayer.MailServices;
 using Project.BusinessLogicLayer.Managers.Abstracts;
 using Project.DataAccessLayer.Repositories.Abstracts;
 using Project.Entities.Models.Domains;
+using Project.Entities.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,16 +16,18 @@ namespace Project.BusinessLogicLayer.Managers.Concretes
 {
     public class AppUserManager : BaseManager<AppUserDTO, AppUser>, IAppUserManager
     {
-        IMapper _mapper; 
-        UserManager<AppUser> _userManager;
-        RoleManager<AppRole> _roleManager;
-        SignInManager<AppUser> _signManager;
+        readonly IMapper _mapper;
+        readonly IRepository<AppUser> _repository;
+        readonly UserManager<AppUser> _userManager;
+        readonly RoleManager<AppRole> _roleManager;
+        readonly SignInManager<AppUser> _signManager;
         public AppUserManager(IMapper mapper, IRepository<AppUser> repository, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager,SignInManager<AppUser> signInManager) : base(mapper, repository)
         {
             _mapper = mapper;
             _userManager = userManager;
             _roleManager = roleManager;
             _signManager = signInManager;
+            _repository = repository;
         }
 
         public async Task AddToRoleAsync(AppUserDTO appUser)
@@ -37,6 +40,8 @@ namespace Project.BusinessLogicLayer.Managers.Concretes
             }
             await _userManager.AddToRoleAsync(_mapper.Map<AppUser>(appUser), "Member");
         }
+
+       
 
         public async Task<IdentityResult> CreateAppUserAsync(AppUserDTO appUserDTO)
         {
@@ -58,14 +63,53 @@ namespace Project.BusinessLogicLayer.Managers.Concretes
         }
 
         public async Task<SignInResult> PasswordSignInAsync(AppUserDTO appUserDTO)
-        {
-            return await _signManager.PasswordSignInAsync(await FindUserByEmailAsync(appUserDTO), appUserDTO.Password,true,true);
+        {           
+            return await _signManager.PasswordSignInAsync(await FindUserByEmailAsync(appUserDTO), appUserDTO.Password, true, true);
         }
 
-        public async Task SendConfirmEMail(string email)
+        public async Task SendConfirmEMailAsync(string email)
         {
             AppUser appUser = await _userManager.FindByEmailAsync(email);
-            MailService.Send(receiver:email,body: $"Hesabınız olusturulmustur...Üyeliginizi onaylamak icin lütfen http://localhost:5172/Home/ConfirmEmail?specId={appUser.ActivationCode}&id={appUser.Id} linkine tıklayınız ");
+            MailService.Send(receiver:email,body: $"Hesabınız olusturulmustur...Üyeliginizi onaylamak icin lütfen http://localhost:5110/Authentication/ConfirmEmail?specId={appUser.ActivationCode}&id={appUser.Id} linkine tıklayınız ");
         }
+
+
+
+        public async Task<ConfirmEmailResultDTO> ConfirmEmailAsync(Guid specId, int id)
+        {
+            ConfirmEmailResultDTO result = new();
+            AppUser appUser = await _repository.FindAsync(id);
+
+            if (appUser == null)
+            {
+                result.Succeeded = false;
+                result.Message = "kullanıcı bulunamadı";
+                return result;
+            }
+            else if (appUser.EmailConfirmed)
+            {
+                result.Succeeded = false;
+                result.Message = "e posta zaten onaylanmış";
+                return result;
+            }
+            else if (appUser.ActivationCode != specId)
+            {
+                result.Succeeded = false;
+                result.Message = "aktivasyon kodu geçersiz";
+                return result;
+            }
+
+            appUser.EmailConfirmed = true;
+            appUser.ModifiedDate = DateTime.Now;
+            appUser.Status = DataStatus.Updated;
+            await _repository.SaveChangesAsync();
+
+            result.Succeeded = true;
+            result.Message = "e posta onaylandı";
+            return result;
+        }
+
+
+
     }
 }

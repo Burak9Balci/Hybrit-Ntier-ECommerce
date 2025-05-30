@@ -19,9 +19,9 @@ namespace Project.BusinessLogicLayer.Managers.Abstracts
 
         Task AddAsync(T item);
         Task UpdateAsync(T item);
-        Task DeleteAsync(T item);
-
-    
+        Task DeleteAsync(int id);
+      
+        Task<bool> AnyAsync(Expression<Func<U, bool>> exp);
         Task<U> FindAsync(int id);
     }
 }

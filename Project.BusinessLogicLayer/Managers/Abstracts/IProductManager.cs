@@ -10,5 +10,6 @@ namespace Project.BusinessLogicLayer.Managers.Abstracts
 {
     public interface IProductManager:IManager<ProductDTO,Product>
     {
+        public Task AddProductAsync(ProductDTO productDTO);
     }
 }

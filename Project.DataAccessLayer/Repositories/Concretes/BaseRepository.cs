@@ -22,7 +22,7 @@ namespace Project.DataAccessLayer.Repositories.Concretes
         public async Task AddAsync(T item)
         {
             await _db.Set<T>().AddAsync(item);
-            _db.SaveChanges();
+           await SaveChangesAsync();
         }
 
         public async Task<bool> AnyAsync(Expression<Func<T, bool>> exp)
@@ -41,11 +41,16 @@ namespace Project.DataAccessLayer.Repositories.Concretes
             return await _db.Set<T>().ToListAsync();
         }
 
+        public async Task SaveChangesAsync()
+        {
+           await _db.SaveChangesAsync();
+        }
+
         public async Task UpdateAsync(T originalEntity, T newEntity)
         {
            
             _db.Entry(originalEntity).CurrentValues.SetValues(newEntity);
-            await _db.SaveChangesAsync();
+            await SaveChangesAsync();
         }
 
         public List<T> Where(Expression<Func<T, bool>> exp)
