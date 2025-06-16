@@ -14,6 +14,6 @@ namespace Project.Entities.Models.Domains
 
         //Rs Prop
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
-        public virtual AppUser AppUser { get; set; }
+        public virtual User AppUser { get; set; }
     }
 }

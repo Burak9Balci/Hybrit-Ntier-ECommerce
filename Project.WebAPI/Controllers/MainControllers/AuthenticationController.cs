@@ -32,11 +32,11 @@ namespace Project.WebAPI.Controllers.MainControllers
             else return BadRequest($"{confirm.Message}");
 
         }
-        [HttpPost]
+        [HttpPost("register")]
         public async Task<IActionResult> Register(CreateUserRequestModel requestModel)
         {
 
-            if (await _appUserManager.AnyAsync(x =>x.Email == requestModel.Email))
+            if (!await _appUserManager.AnyAsync(x =>x.Email == requestModel.Email))
             {
                 AppUserDTO appUserDTO = _mapper.Map<AppUserDTO>(requestModel);
                 IdentityResult result = await _appUserManager.CreateAppUserAsync(appUserDTO);
@@ -45,13 +45,13 @@ namespace Project.WebAPI.Controllers.MainControllers
                 {
                     await _appUserManager.AddToRoleAsync(appUserDTO);
                     await _appUserManager.SendConfirmEMailAsync(appUserDTO.Email);
-                    Ok("Kayıt oldun Evladımm");
+                    return Ok("Kayıt oldun Evladımm");
                 }
                 return BadRequest("Giriş Yaparken Hata");
             }
             return BadRequest("Girdiğin Email daha onceden alınmış");
         }
-        [HttpPost]
+        [HttpPost("signIn")]
         public async Task<IActionResult> SignIn(CreateUserRequestModel requestModel)
         {
             AppUserDTO appUserDTO = _mapper.Map<AppUserDTO>(requestModel);

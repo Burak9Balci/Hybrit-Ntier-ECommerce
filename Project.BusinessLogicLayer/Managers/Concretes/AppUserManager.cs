@@ -14,14 +14,14 @@ using System.Threading.Tasks;
 
 namespace Project.BusinessLogicLayer.Managers.Concretes
 {
-    public class AppUserManager : BaseManager<AppUserDTO, AppUser>, IAppUserManager
+    public class AppUserManager : BaseManager<AppUserDTO, User>, IAppUserManager
     {
         readonly IMapper _mapper;
-        readonly IRepository<AppUser> _repository;
-        readonly UserManager<AppUser> _userManager;
-        readonly RoleManager<AppRole> _roleManager;
-        readonly SignInManager<AppUser> _signManager;
-        public AppUserManager(IMapper mapper, IRepository<AppUser> repository, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager,SignInManager<AppUser> signInManager) : base(mapper, repository)
+        readonly IRepository<User> _repository;
+        readonly UserManager<User> _userManager;
+        readonly RoleManager<Role> _roleManager;
+        readonly SignInManager<User> _signManager;
+        public AppUserManager(IMapper mapper, IRepository<User> repository, UserManager<User> userManager, RoleManager<Role> roleManager,SignInManager<User> signInManager) : base(mapper, repository)
         {
             _mapper = mapper;
             _userManager = userManager;
@@ -33,26 +33,25 @@ namespace Project.BusinessLogicLayer.Managers.Concretes
         public async Task AddToRoleAsync(AppUserDTO appUser)
         {
          
-            AppRole appRole = await _roleManager.FindByNameAsync("Member");
-            if (appRole == null)
-            {
-                await _roleManager.CreateAsync(new() { Name = "Member"});
-            }
-            await _userManager.AddToRoleAsync(_mapper.Map<AppUser>(appUser), "Member");
+            Role appRole = await _roleManager.FindByNameAsync("Member");
+            User appUserDomain = await _userManager.FindByEmailAsync(appUser.Email);
+            await _userManager.AddToRoleAsync(appUserDomain, appRole.Name);
         }
 
-    
+
         public async Task<IdentityResult> CreateAppUserAsync(AppUserDTO appUserDTO)
         {
-            AppUser user = _mapper.Map<AppUser>(appUserDTO);
             Guid specId = Guid.NewGuid();
+            User user = _mapper.Map<User>(appUserDTO);
+            user.CreatedDate = DateTime.Now;
+            user.Status = DataStatus.Inserted;
             user.ActivationCode = specId;
-            return await _userManager.CreateAsync(user,appUserDTO.Password);
-         
+            return await _userManager.CreateAsync(user, appUserDTO.Password);
 
         }
 
-        public async Task<AppUser> FindUserByEmailAsync(AppUserDTO appUserDTO)
+
+        public async Task<User> FindUserByEmailAsync(AppUserDTO appUserDTO)
         {
           return await _userManager.FindByEmailAsync(appUserDTO.Email);
         }
@@ -69,8 +68,8 @@ namespace Project.BusinessLogicLayer.Managers.Concretes
 
         public async Task SendConfirmEMailAsync(string email)
         {
-            AppUser appUser = await _userManager.FindByEmailAsync(email);
-            MailService.Send(receiver:email,body: $"Hesabınız olusturulmustur...Üyeliginizi onaylamak icin lütfen http://localhost:5110/Authentication/ConfirmEmail?specId={appUser.ActivationCode}&id={appUser.Id} linkine tıklayınız ");
+            User appUser = await _userManager.FindByEmailAsync(email);
+            MailService.Send(receiver:email,body: $"Hesabınız olusturulmustur...Üyeliginizi onaylamak icin lütfen http://localhost:5110/api/authentication?specId={appUser.ActivationCode}&id={appUser.Id} linkine tıklayınız ");
         }
 
 
@@ -78,7 +77,7 @@ namespace Project.BusinessLogicLayer.Managers.Concretes
         public async Task<ConfirmEmailResultDTO> ConfirmEmailAsync(Guid specId, int id)
         {
             ConfirmEmailResultDTO result = new();
-            AppUser appUser = await _repository.FindAsync(id);
+            User appUser = await _repository.FindAsync(id);
 
             if (appUser == null)
             {

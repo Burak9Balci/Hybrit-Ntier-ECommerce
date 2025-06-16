@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace Project.BusinessLogicLayer.Managers.Concretes
 {
-    public class AppRoleManager : BaseManager<AppRoleDTO, AppRole>,IAppRoleManager
+    public class AppRoleManager : BaseManager<AppRoleDTO, Role>,IAppRoleManager
     {
-        public AppRoleManager(IMapper mapper, IRepository<AppRole> repository) : base(mapper, repository)
+        public AppRoleManager(IMapper mapper, IRepository<Role> repository) : base(mapper, repository)
         {
         }
     }

@@ -22,10 +22,16 @@ namespace Project.WebAPI.Controllers.DomainControllers
             _productManager = productManager;
   
         }
-        [HttpGet]
+        [HttpGet("getProducts")]
         public IActionResult GetProducts()
         {
             List<ProductResponseModel> productResponses = _mapper.Map<List<ProductResponseModel>>(_productManager.GetActives());
+            return Ok(productResponses);
+        }
+        [HttpGet("getProductsByCategory/{categoryName}")]
+        public IActionResult GetProductsByCategory(string categoryName)
+        {
+            List<ProductResponseModel> productResponses = _mapper.Map<List<ProductResponseModel>>(_productManager.GetProductsByCategoryName(categoryName));
             return Ok(productResponses);
         }
         [HttpGet("{id}")]
@@ -38,12 +44,13 @@ namespace Project.WebAPI.Controllers.DomainControllers
         public async Task<IActionResult> AddProduct(CreateProductRequestModel productRequest)
         {
             ProductDTO productDTO = _mapper.Map<ProductDTO>(productRequest);
-            await _productManager.AddProductAsync(productDTO);
+            await _productManager.AddAsync(productDTO);
             return Ok("Ekleme yapıldı");
         }
-        [HttpPut]
-        public async Task<IActionResult> UpdateProduct(UpdateProductRequestModel updateRequest)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateProduct(int id,UpdateProductRequestModel updateRequest)
         {
+            if (id != updateRequest.ID) return BadRequest("gönderilen idler uyuşmuyor");
             ProductDTO productDTO = _mapper.Map<ProductDTO>(updateRequest);
             await _productManager.UpdateAsync(productDTO);
             return Ok("Güncelleme yapıldı");

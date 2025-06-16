@@ -13,9 +13,9 @@ namespace Project.BusinessLogicLayer.DTOMappers
     {
         public DTOMapper()
         {
-            CreateMap<AppUser, AppUserDTO>().ReverseMap();
+            CreateMap<User, AppUserDTO>().ReverseMap();
       
-            CreateMap<AppRole, AppRoleDTO>().ReverseMap();
+            CreateMap<Role, AppRoleDTO>().ReverseMap();
         
             CreateMap<Category, CategoryDTO>().ReverseMap();
    

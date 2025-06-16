@@ -39,9 +39,10 @@ namespace Project.WebAPI.Controllers.DomainControllers
             await _categoryManager.AddAsync(category);
             return Ok("Ekleme Gerçekleşti");
         }
-        [HttpPut]
-        public async Task<IActionResult> UpdateCategory(UpdateCategoryRequestModel updateCategory)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateCategory(int id,UpdateCategoryRequestModel updateCategory)
         {
+            if (id != updateCategory.ID) return BadRequest("gönderilen idler uyuşmuyor");
             CategoryDTO category = _mapper.Map<CategoryDTO>(updateCategory);
             await _categoryManager.UpdateAsync(category);
             return Ok("Update Gerçekleşti");

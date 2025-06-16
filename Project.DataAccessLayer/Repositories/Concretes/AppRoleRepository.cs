@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Project.DataAccessLayer.Repositories.Concretes
 {
-    public class AppRoleRepository : BaseRepository<AppRole>, IAppRoleRepository
+    public class AppRoleRepository : BaseRepository<Role>, IAppRoleRepository
     {
         public AppRoleRepository(MyContext db) : base(db)
         {

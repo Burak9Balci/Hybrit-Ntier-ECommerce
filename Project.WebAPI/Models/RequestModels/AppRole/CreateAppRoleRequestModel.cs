@@ -2,5 +2,6 @@
 {
     public class CreateAppRoleRequestModel
     {
+        public string Name { get; set; }
     }
 }

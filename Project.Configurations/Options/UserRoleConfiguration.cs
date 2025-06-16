@@ -8,14 +8,17 @@ using System.Threading.Tasks;
 
 namespace Project.Configurations.Options
 {
-    public class AppUserConfiguration : BaseConfiguration<User>
+    public class UserRoleConfiguration : BaseConfiguration<UserRole>
     {
-        public override void Configure(EntityTypeBuilder<User> builder)
+        public override void Configure(EntityTypeBuilder<UserRole> builder)
         {
             base.Configure(builder);
-            builder.HasMany(x => x.UserRoles).WithOne(x => x.User).HasForeignKey(x => x.UserId  ).IsRequired();
-
-
+            builder.Ignore(x =>x.Id);
+            builder.HasKey(x => new
+            {
+                x.UserId,
+                x.RoleId,
+            });
         }
     }
 }

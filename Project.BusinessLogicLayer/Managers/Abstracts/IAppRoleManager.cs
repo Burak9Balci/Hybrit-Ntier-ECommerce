@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Project.BusinessLogicLayer.Managers.Abstracts
 {
-    public interface IAppRoleManager : IManager<AppRoleDTO, AppRole>
+    public interface IAppRoleManager : IManager<AppRoleDTO, Role>
     {
     }
 }

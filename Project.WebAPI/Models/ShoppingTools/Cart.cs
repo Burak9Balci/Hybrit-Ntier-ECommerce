@@ -44,6 +44,12 @@ namespace Project.WebAPI.Models.ShoppingTools
             _myCart.Remove(id);
         }
         [JsonProperty("TotalPrice")]
-        public decimal TotalPrice { get; set; }
+        public decimal TotalPrice
+        {
+            get
+            {
+                return _myCart.Values.Sum(x => x.SubTotal);
+            }
+        }
     }
 }

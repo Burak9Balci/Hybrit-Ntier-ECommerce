@@ -7,6 +7,7 @@
         public string? CategoryName { get; set; }
         public short? Stock { get; set; }
         public int? CategoryID { get; set; }
+        public string? ImagePath { get; set; }
 
     }
 }

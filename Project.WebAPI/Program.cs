@@ -27,6 +27,11 @@ builder.Services.AddManagerService();
 builder.Services.AddRepositoryService();
 builder.Services.AddMapperService();
 builder.Services.AddRequestResponseMapperService();
+builder.Services.AddAuthentication("Identity.Application")
+            .AddCookie("Identity.Application", options =>
+            {
+            
+            });
 
 WebApplication app = builder.Build();
 

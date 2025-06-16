@@ -23,12 +23,9 @@ namespace Project.BusinessLogicLayer.Managers.Concretes
             _repositoryCat = repositoryCat;
         }
 
-        public async Task AddProductAsync(ProductDTO productDTO)
+        public List<ProductDTO> GetProductsByCategoryName(string categoryName)
         {
-            Product product = _mapper.Map<Product>(productDTO);
-            Category c = await _repositoryCat.FindAsync(product.CategoryID);
-            product.CategoryName = c.CategoryName;
-            await _repositoryPro.AddAsync(product);
+           return _mapper.Map<List<ProductDTO>>(_repositoryPro.Where(x =>x.CategoryName == categoryName));
         }
     }
 }

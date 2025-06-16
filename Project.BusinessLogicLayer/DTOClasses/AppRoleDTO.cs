@@ -8,6 +8,7 @@ namespace Project.BusinessLogicLayer.DTOClasses
 {
     public class AppRoleDTO : BaseDTO
     {
-
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

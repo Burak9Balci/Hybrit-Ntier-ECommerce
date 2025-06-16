@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Project.DataAccessLayer.Repositories.Abstracts
 {
-    public interface IAppRoleRepository:IRepository<AppRole>
+    public interface IAppRoleRepository:IRepository<Role>
     {
     }
 }

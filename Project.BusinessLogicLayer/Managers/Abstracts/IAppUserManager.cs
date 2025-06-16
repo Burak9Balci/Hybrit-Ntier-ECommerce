@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace Project.BusinessLogicLayer.Managers.Abstracts
 {
-    public interface IAppUserManager : IManager<AppUserDTO,AppUser>
+    public interface IAppUserManager : IManager<AppUserDTO,User>
     {
         Task<IdentityResult> CreateAppUserAsync(AppUserDTO appUserDTO);
         Task AddToRoleAsync(AppUserDTO appUserDTO);
         Task<SignInResult> PasswordSignInAsync(AppUserDTO appUserDTO);
-        Task<AppUser> FindUserByEmailAsync(AppUserDTO appUserDTO);
+        Task<User> FindUserByEmailAsync(AppUserDTO appUserDTO);
         Task<IList<string>> GetRolesAsync(AppUserDTO appUserDTO);
         Task SendConfirmEMailAsync(string email);
         Task<ConfirmEmailResultDTO> ConfirmEmailAsync(Guid specId, int id);

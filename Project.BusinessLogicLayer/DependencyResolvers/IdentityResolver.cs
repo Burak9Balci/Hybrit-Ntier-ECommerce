@@ -14,7 +14,7 @@ namespace Project.BusinessLogicLayer.DependencyResolvers
     {
         public static void AddIdentityService(this IServiceCollection services)
         {
-            services.AddIdentityCore<AppUser>(x =>
+            services.AddIdentityCore<User>(x =>
             {
                 x.Password.RequireDigit = false;
                 x.Password.RequiredLength = 3;
@@ -23,9 +23,9 @@ namespace Project.BusinessLogicLayer.DependencyResolvers
                 x.SignIn.RequireConfirmedEmail = true;
                 x.Password.RequireNonAlphanumeric = false;
             })
-     .AddRoles<AppRole>() 
-     .AddRoleManager<RoleManager<AppRole>>() 
-     .AddSignInManager<SignInManager<AppUser>>() 
+     .AddRoles<Role>() 
+     .AddRoleManager<RoleManager<Role>>() 
+     .AddSignInManager<SignInManager<User>>() 
      .AddEntityFrameworkStores<MyContext>()
      .AddDefaultTokenProviders();
         }

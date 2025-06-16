@@ -9,21 +9,16 @@ using System.Threading.Tasks;
 
 namespace Project.Entities.Models.Domains
 {
-    public class AppRole : IdentityRole<int>, IEntity
+    public class Role : IdentityRole<int>, IEntity
     {
-        public AppRole()
-        {
-            CreatedDate = DateTime.Now;
-            Status = DataStatus.Inserted;
-        }
+
        
         public DateTime CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
         public DataStatus Status { get; set; }
-        public int? AppUserID { get; set; }
 
         //RS
-        public virtual AppUser AppUser { get; set; }
+        public virtual ICollection<UserRole> UserRoles { get; set; }
     }
 }

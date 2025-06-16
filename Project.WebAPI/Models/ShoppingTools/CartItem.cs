@@ -33,7 +33,6 @@ namespace Project.WebAPI.Models.ShoppingTools
         [JsonProperty("CategoryName")]
         public string CategoryName { get; set; }
 
-        [JsonProperty("CategoryId")]
-        public int? CategoryId { get; set; }
+    
     }
 }

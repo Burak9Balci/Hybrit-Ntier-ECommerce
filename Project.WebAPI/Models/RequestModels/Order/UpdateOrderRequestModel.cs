@@ -2,5 +2,6 @@
 {
     public class UpdateOrderRequestModel
     {
+        public int ID { get; set; }
     }
 }

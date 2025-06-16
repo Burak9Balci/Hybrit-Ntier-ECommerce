@@ -25,6 +25,9 @@ namespace Project.BusinessLogicLayer.Managers.Concretes
 
         public async Task AddAsync(T item)
         {
+            item.CreatedDate = DateTime.Now;
+            item.Status = DataStatus.Inserted;
+
             U domain = _mapper.Map<U>(item);
             await _repository.AddAsync(domain);
         }
@@ -43,9 +46,9 @@ namespace Project.BusinessLogicLayer.Managers.Concretes
             await _repository.SaveChangesAsync();
         }
 
-        public async Task<U> FindAsync(int id)
+        public async Task<T> FindAsync(int id)
         {
-          return await _repository.FindAsync(id);
+          return _mapper.Map<T>(await _repository.FindAsync(id));
         }
 
         public List<T> GetActives()

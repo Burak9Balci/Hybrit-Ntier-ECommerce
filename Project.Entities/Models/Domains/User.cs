@@ -9,28 +9,23 @@ using System.Threading.Tasks;
 
 namespace Project.Entities.Models.Domains
 {
-    public class AppUser : IdentityUser<int>, IEntity
+    public class User : IdentityUser<int>, IEntity
     {
 
         //Guid bilgisayarınızın mac adresi ip adresi ve sistem tarihini alıp bunları bir takım algoritmalarla hashleyip size bir kod olusturan bir tiptir...
         public Guid ActivationCode { get; set; } //Her kullanıcım icin sadece ona özgü unique bir kod olusturmak isterim ki onun Email'ine o kodu gönderebileyim. Böylece ben onun Email'ine gidip oradaki linke tıkladıgını o kodu bana geri ulastırdıgında anlarım...
 
 
-        public AppUser()
-        {
-            CreatedDate = DateTime.Now; 
-            Status = DataStatus.Inserted;
-        }
+       
        
         public DateTime CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
         public DataStatus Status { get; set; }
-        public int? AppRoleID { get; set; }
         public string Password { get; set; }
 
         //RS props
-        public virtual AppRole AppRole { get; set; }
+        public virtual ICollection<UserRole> UserRoles { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
     }
 }

@@ -31,9 +31,11 @@ namespace Project.WebAPI.Controllers.DomainControllers
            AppUserResponseModel user = _mapper.Map<AppUserResponseModel>(await _userManager.FindAsync(id));
            return Ok(user);
         }
-        [HttpPut]
-        public async Task<IActionResult> UpdateUser(UpdateUserRequestModel requestModel)
+        
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser(int id,UpdateUserRequestModel requestModel)
         {
+            if (id != requestModel.Id) return BadRequest("gönderilen idler uyuşmuyor");
             await _userManager.UpdateAsync(_mapper.Map<AppUserDTO>(requestModel));
             return Ok("Güncellendi");
         }

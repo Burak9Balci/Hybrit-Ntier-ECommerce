@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Project.DataAccessLayer.Repositories.Concretes
 {
-    public class AppUserRepository : BaseRepository<AppUser>, IAppUserRepository
+    public class AppUserRepository : BaseRepository<User>, IAppUserRepository
     {
         public AppUserRepository(MyContext db) : base(db)
         {
