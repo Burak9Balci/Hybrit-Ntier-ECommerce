@@ -5,6 +5,7 @@ using Project.BusinessLogicLayer.DTOClasses;
 using Project.BusinessLogicLayer.Managers.Abstracts;
 using Project.WebAPI.Models.RequestModels.AppUser;
 using Project.WebAPI.Models.ResponseModels.AppUserResponseModels;
+using System.Threading.Tasks;
 
 namespace Project.WebAPI.Controllers.DomainControllers
 {
@@ -20,9 +21,10 @@ namespace Project.WebAPI.Controllers.DomainControllers
             _userManager = userManager;
         }
         [HttpGet]
-        public IActionResult GetUsers()
+        public async Task<IActionResult> GetUsers()
         {
-            List<AppUserResponseModel> appUsers = _mapper.Map<List<AppUserResponseModel>>(_userManager.GetActives());
+           
+            List<AppUserResponseModel> appUsers = _mapper.Map<List<AppUserResponseModel>>(await _userManager.GetAllUsersWithRolesAsync());
             return Ok(appUsers);
         }
         [HttpGet("{id}")]
@@ -32,12 +34,24 @@ namespace Project.WebAPI.Controllers.DomainControllers
            return Ok(user);
         }
         
-        [HttpPut("{id}")]
+        [HttpPut("updateUser/{id}")]
         public async Task<IActionResult> UpdateUser(int id,UpdateUserRequestModel requestModel)
         {
             if (id != requestModel.Id) return BadRequest("gönderilen idler uyuşmuyor");
             await _userManager.UpdateAsync(_mapper.Map<AppUserDTO>(requestModel));
             return Ok("Güncellendi");
+        }
+        [HttpPut("updateUserRole/{role}/{id}")]
+        public async Task<IActionResult> UpdateUserRole(string role,int id)
+        {
+            await _userManager.UpdateUserRole(role, id);
+            return Ok("Role Eklendi");
+        }
+        [HttpPut("deleteUserRole/{role}/{id}")]
+        public async Task<IActionResult> DeleteUserRole(string role, int id)
+        {
+            await _userManager.DeleteRoleFromUser(role, id);
+            return Ok("Role silindi");
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)

@@ -47,7 +47,7 @@ namespace Project.WebAPI.Controllers.MainControllers
                     await _appUserManager.SendConfirmEMailAsync(appUserDTO.Email);
                     return Ok("Kayıt oldun Evladımm");
                 }
-                return BadRequest("Giriş Yaparken Hata");
+                return BadRequest($"Giriş Yaparken Hata {result.Errors.ToList()[0].Description}");
             }
             return BadRequest("Girdiğin Email daha onceden alınmış");
         }

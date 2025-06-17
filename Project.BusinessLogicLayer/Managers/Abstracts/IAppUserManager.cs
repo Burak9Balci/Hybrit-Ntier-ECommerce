@@ -18,5 +18,9 @@ namespace Project.BusinessLogicLayer.Managers.Abstracts
         Task<IList<string>> GetRolesAsync(AppUserDTO appUserDTO);
         Task SendConfirmEMailAsync(string email);
         Task<ConfirmEmailResultDTO> ConfirmEmailAsync(Guid specId, int id);
+        Task DeleteRoleFromUser(string role,int id);
+        Task UpdateUserRole(string role, int id);
+        Task<List<AppUserDTO>> GetAllUsersWithRolesAsync();
+
     }
 }

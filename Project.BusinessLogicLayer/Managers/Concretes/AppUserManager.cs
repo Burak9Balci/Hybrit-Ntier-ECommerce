@@ -108,7 +108,39 @@ namespace Project.BusinessLogicLayer.Managers.Concretes
             return result;
         }
 
+        public async Task UpdateUserRole(string role, int id)
+        {
+            User user =  await _repository.FindAsync(id);
+            await _userManager.AddToRoleAsync(user, role);
+            user.Status = DataStatus.Updated;
+            user.ModifiedDate = DateTime.Now;
+            await _repository.SaveChangesAsync();
+        }
 
+        public async Task DeleteRoleFromUser(string role, int id)
+        {
+            User appUser = await _repository.FindAsync(id);
+            await _userManager.RemoveFromRoleAsync(appUser, role);
+            appUser.Status = DataStatus.Updated;
+            appUser.ModifiedDate = DateTime.Now;
+            await _repository.SaveChangesAsync();
+        }
+
+        public async Task<List<AppUserDTO>> GetAllUsersWithRolesAsync()
+        {
+            List<User> activeUsers = _repository.Where(x =>x.Status != DataStatus.Deleted);
+            List<AppUserDTO> userDtos = new List<AppUserDTO>();
+
+            foreach (User user in activeUsers)
+            {
+                AppUserDTO dto = _mapper.Map<AppUserDTO>(user);
+                IList<string> roles = await _userManager.GetRolesAsync(user);
+                dto.Roles = roles.ToList();
+                userDtos.Add(dto);
+            }
+
+            return userDtos;
+        }
 
     }
 }

@@ -33,7 +33,7 @@ namespace Project.WebAPI.Controllers.DomainControllers
             OrderResponseModel orderResponse = _mapper.Map<OrderResponseModel>(await _orderManager.FindAsync(id));
             return Ok(orderResponse);
         }
-        [HttpPut("{id}")]
+        [HttpPut("updateOrder/{id}")]
         public async Task<IActionResult> UpdateOrder(int id,UpdateOrderRequestModel updateOrder)
         {
             if (id != updateOrder.ID) return BadRequest("gönderilen idler uyuşmuyor");

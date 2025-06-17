@@ -39,7 +39,7 @@ namespace Project.WebAPI.Controllers.DomainControllers
             await _appRoleManager.AddAsync(_mapper.Map<AppRoleDTO>(createAppRole));
             return Ok("Ekleme yapıldı");
         }
-        [HttpPut("{id}")]
+        [HttpPut("updateRole/{id}")]
         public async Task<IActionResult> UpdateRole(int id,UpdateAppRoleRequestModel updateAppRole)
         {
             if (id != updateAppRole.Id) return BadRequest("gönderilen idler uyuşmuyor"); 

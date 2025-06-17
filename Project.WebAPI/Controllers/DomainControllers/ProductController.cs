@@ -47,7 +47,7 @@ namespace Project.WebAPI.Controllers.DomainControllers
             await _productManager.AddAsync(productDTO);
             return Ok("Ekleme yapıldı");
         }
-        [HttpPut("{id}")]
+        [HttpPut("updateProduct/{id}")]
         public async Task<IActionResult> UpdateProduct(int id,UpdateProductRequestModel updateRequest)
         {
             if (id != updateRequest.ID) return BadRequest("gönderilen idler uyuşmuyor");

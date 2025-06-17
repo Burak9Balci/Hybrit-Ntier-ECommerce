@@ -14,6 +14,10 @@ namespace Project.DataAccessLayer.Repositories.Concretes
 {
     public class BaseRepository<T> : IRepository<T> where T : class, IEntity
     {
+        public async Task SaveChangesAsync()
+        {
+            await _db.SaveChangesAsync();
+        }
         MyContext _db;
         public BaseRepository(MyContext db)
         {
@@ -41,10 +45,7 @@ namespace Project.DataAccessLayer.Repositories.Concretes
             return await _db.Set<T>().ToListAsync();
         }
 
-        public async Task SaveChangesAsync()
-        {
-           await _db.SaveChangesAsync();
-        }
+       
 
         public async Task UpdateAsync(T originalEntity, T newEntity)
         {
